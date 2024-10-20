@@ -67,7 +67,7 @@ jobs:
           fi
 
       - name: Create new tag
-        if: github.event.pull_request.merged == true
+        if: github.event_name != 'push' || github.ref_type != 'tag'
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
