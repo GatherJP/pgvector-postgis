@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -45,7 +45,7 @@ jobs:
         id: get_version
         run: |
           # Get the latest tag
-          latest_tag=$(git describe --tags --abbrev=0)
+          latest_tag=$(git describe --tags --always --abbrev=0)
           echo "Latest tag: $latest_tag"
 
           # Extract the patch version and increment it
