@@ -5,3 +5,8 @@ updates:
     directory: /
     schedule:
       interval: "weekly"
+    # ignore major updates
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
