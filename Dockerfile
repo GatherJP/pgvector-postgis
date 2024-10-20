@@ -1,4 +1,4 @@
-FROM postgres@sha256:68b988a164c8bdf0752fa7a4ae2d4b34a058e21c6327e69f741c081a38e97254
+FROM postgres:15.7
 
 # NOTE: check pgvector and postgis versions
 RUN apt-get update && \
