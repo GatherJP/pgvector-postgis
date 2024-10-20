@@ -35,6 +35,12 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Convert repository name to lowercase
+        id: lowercase
+        run: |
+          REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+           echo "REPO=$REPO" >> $GITHUB_ENV
+
       - name: Get current version
         id: get_version
         run: |
@@ -76,5 +82,5 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            ${{env.REGISTRY}}/${{ github.repository }}:${{ env.new_tag }}
-            ${{env.REGISTRY}}/${{ github.repository }}:latest
+            ${{env.REGISTRY}}/${{ env.REPO }}:${{ env.new_tag }}
+            ${{env.REGISTRY}}/${{ env.REPO }}:latest
