@@ -44,7 +44,7 @@ jobs:
       - name: Create Tag
         id: create-tag
         run: |
-          TAG = $(echo "${{ github.sha }}")
+          TAG=$(echo "${{ github.sha }}")
           echo "new_tag=$TAG" >> $GITHUB_ENV
 
       - name: Build and push
