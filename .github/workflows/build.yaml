@@ -39,40 +39,13 @@ jobs:
         id: lowercase
         run: |
           REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-           echo "REPO=$REPO" >> $GITHUB_ENV
+          echo "REPO=$REPO" >> $GITHUB_ENV
 
-      - name: Get current version
-        id: get_version
+      - name: Create Tag
+        id: create-tag
         run: |
-          # Get the latest tag
-          git fetch --tags
-          latest_tag=$(git describe --tags --abbrev=0)
-          echo "Latest tag: $latest_tag"
-
-          # Extract the patch version and increment it
-          version_regex="^v([0-9]+)\.([0-9]+)\.([0-9]+)$"
-          if [[ "$latest_tag" =~ $version_regex ]]; then
-            major="${BASH_REMATCH[1]}"
-            minor="${BASH_REMATCH[2]}"
-            patch="${BASH_REMATCH[3]}"
-            new_patch=$((patch + 1))
-            new_tag="v${major}.${minor}.${new_patch}"
-            echo "New tag: $new_tag"
-            echo "new_tag=$new_tag" >> $GITHUB_ENV
-          else
-            echo "Invalid version format in the latest tag."
-            exit 1
-          fi
-
-      - name: Create new tag
-        if: github.event_name != 'push' || github.ref_type != 'tag'
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-
-          # Create and push the new tag
-          git tag ${{ env.new_tag }}
-          git push origin ${{ env.new_tag }}
+          TAG = $(echo "${{ github.sha }}")
+          echo "new_tag=$TAG" >> $GITHUB_ENV
 
       - name: Build and push
         uses: docker/build-push-action@v5
