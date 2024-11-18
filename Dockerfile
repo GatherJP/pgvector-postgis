@@ -1,4 +1,4 @@
-FROM postgres:15.8
+FROM postgres:15.9
 
 # NOTE: check pgvector and postgis versions
 RUN apt-get update && \
